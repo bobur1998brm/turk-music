@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        .container{
+            width: 100%;
+            height: 100vh;
+            background: url('audio/en-çok-izlenen-diziler-türk.jpg') no-repeat center;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .container::before{
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000aa;
+       
+        }
+        #btns{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            z-index: 2;
+        }
+        .btn{
+            width: 130px;
+            height: 48px;
+            margin: 12px; 
+            background:rgb(99, 47, 5);
+            color: #fff;
+            font-size: 16px;
+            text-transform: uppercase;
+            border: none;
+            outline: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+        }
+        .active{
+            background:rgb(170, 80, 5);
+        }
+        .active::before{
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:rgb(170, 80, 5);
+            filter: blur(15px);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <audio id="ertugrul" src="audio/_Ertuğrul_Gazi_-_Jenerik_Müziği_(Soundtrack)(256kbps).mp3"></audio>
+        <audio id="icerde" src="audio/İçerde_Jenerik_Müziği_-_Toygar_Işıklı_(_Orijinal_Versiyon_)(256kbps).mp3"></audio>
+        <audio id="muhtesem" src="audio/Muhteşem_Yüzyıl_The_Magnificent_Century_Official_Soundtrack_Vol._1_01_Muhteşem_Yüzyıl_Jenerik_HQ(128kbps).mp3"></audio>
+        <audio id="abdulhamid" src="audio/Payitaht Abdülhamid - Jenerik Müziği 128 kbps.mp3"></audio>
+        <audio id="calikusu" src="audio/Çalıkuşu_-_Jenerik(128kbps).mp3"></audio>
+        <audio id="cukur" src="audio/Çukur_Jenerik_Müziği__Toygar_Işıklı_(256kbps).mp3"></audio>
+
+        <div id="btns"></div>
+    </div>
+
+    <script>
+        const arr = ['ertugrul', 'icerde', 'muhtesem', 'abdulhamid', 'calikusu', 'cukur']
+
+        arr.forEach(i=>{
+            const btn = document.createElement('button');
+            btn.className = 'btn';
+            btn.innerHTML = i;
+
+            btn.addEventListener('click',()=>{
+                stopSongs()
+                
+                if(btn.classList.contains('active')){
+                    btn.classList.remove('active')
+                  document.getElementById(i).pause()
+                }else{
+                    btn.classList.add('active')
+                document.getElementById(i).play()
+                }
+            })
+            document.getElementById('btns').appendChild(btn)
+        })
+
+        function stopSongs() {
+        arr.forEach(sound => {
+            const song = document.getElementById(sound)
+            const btns = document.querySelectorAll('.btn');
+            btns.forEach(item=>{
+                item.addEventListener('click',()=>{
+                btns.forEach(i=>{
+                i.classList.remove('active')
+                })
+                item.classList.add('active')
+            })
+            })
+            song.pause()
+            song.currentTime = 0;
+        })
+    }
+    </script>
+</body>
+</html>
